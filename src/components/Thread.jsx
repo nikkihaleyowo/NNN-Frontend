@@ -22,8 +22,12 @@ const Reply = (props) =>{
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="your-element-class"
         >
+          <div className="flex justify-between">
+          <h1 onClick={()=>{}} className="border-2 rounded-full pl-2 w-fit right-0 mr-5 px-2">{props.r.userId}</h1>
+        </div>
       <div className="flow-root">
         {props.r.hasImage && <img className={ !large ? 'bg-neutral-200 mt-4 size-[30%] float-left mr-2 ml-1' : 'bg-neutral-200 mt-4 size-[80%] m-auto '} onClick={()=>{setLarge(!large)}} src={props.r.image} alt=''/>}
+        
         <p className="p-2">{props.r.text}</p>
       </div>
       </motion.div>
@@ -65,7 +69,7 @@ const Thread = (props) => {
     console.log(ndata)
     if(image.file!==""||reply!==""){
       try{
-        const rep = await axios.post('https://nnn-backend-4w8i.onrender.com/api/post/reply', ndata)
+        const rep = await axios.post('/api/post/reply', ndata)
         console.log(rep)
         const tReplies = [...data.replies];
         tReplies.push(ndata)
@@ -112,8 +116,10 @@ const Thread = (props) => {
           className="your-element-class"
         >
     <div className="w-[60%] border-2 border-t-8 mx-auto mb-6 rounded-b-2xl border-r-4">
-      <h1 onClick={()=>{navigate(`/thread/${data._id}`);}} className="text-2xl pl-2">{data.title}</h1>
-      
+      <div className="flex justify-between">
+        <h1 onClick={()=>{navigate(`/thread/${data._id}`);}} className="text-2xl pl-2 w-fit" >{data.title}</h1>
+        <h1 onClick={()=>{}} className="border-2 rounded-full text-lg pl-2 w-fit right-0 mr-5 px-2">{data.userId}</h1>
+      </div>
       <div className="flow-root">
         {data.hasImage && <img className={ !large ? 'bg-neutral-200 mt-4 size-[50%] float-left mr-2 ml-1' : 'bg-neutral-200 mt-4 size-[99%] m-auto '} onClick={()=>{setLarge(!large)}} src={data.image} alt=''/>}
         <p className="p-2">{data.text}</p>

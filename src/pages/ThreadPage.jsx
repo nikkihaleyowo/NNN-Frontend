@@ -12,7 +12,7 @@ const ThreadPage = () => {
     const fetchData   
   = async () => {
         try {
-          const response = await axios.get(`https://nnn-backend-4w8i.onrender.com/api/post/getPost/${id}`);
+          const response = await axios.get(`/api/post/getPost/${id}`);
           setPost(response.data);
           setLoaded(true)
         } catch (error) {
