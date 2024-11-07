@@ -10,6 +10,8 @@ export default defineConfig({
  {
         target: 'https://nnn-backend-4w8i.onrender.com',
         changeOrigin: true,
+        secure: false,
+        ws: true,
       },
     },
   },
