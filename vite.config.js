@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    proxy: {
+    /*proxy: {
       '/api':   
  {
         target: 'https://nnn-backend-4w8i.onrender.com',
@@ -13,6 +13,6 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
-    },
+    },*/
   },
 });
