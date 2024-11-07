@@ -65,7 +65,7 @@ const Thread = (props) => {
     console.log(ndata)
     if(image.file!==""||reply!==""){
       try{
-        const rep = await axios.post('http://localhost:3002/api/post/reply', ndata)
+        const rep = await axios.post('https://nnn-backend-4w8i.onrender.com/api/post/reply', ndata)
         console.log(rep)
         const tReplies = [...data.replies];
         tReplies.push(ndata)
