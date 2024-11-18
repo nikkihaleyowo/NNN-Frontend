@@ -6,13 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api':   
-      {
-        target: 'https://nnn-backend-4w8i.onrender.com',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
+      
     },
   },
 });

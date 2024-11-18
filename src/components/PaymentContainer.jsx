@@ -11,7 +11,7 @@ const PaymentContainer = (props) => {
   const [postId,setPostId] = useState(null);
 
   useEffect(()=>{
-    axios.get("/api/payment/config").then(async(res) =>{
+    axios.get("https://nnn-backend-4w8i.onrender.com/api/payment/config").then(async(res) =>{
 
       const {publishableKey} = res.data;
       console.log(publishableKey)
@@ -46,7 +46,7 @@ const PaymentContainer = (props) => {
     if(props.image)
       imgUrl = await uploadFile();
 
-    axios.post("/api/payment/create-payment-intent", {cost: props.cost, title: props.title, text: props.text, tier: props.tier, hasImage: (imgUrl ? true: false), imgUrl: imgUrl}).then(async(result) => {
+    axios.post("https://nnn-backend-4w8i.onrender.com/api/payment/create-payment-intent", {cost: props.cost, title: props.title, text: props.text, tier: props.tier, hasImage: (imgUrl ? true: false), imgUrl: imgUrl}).then(async(result) => {
       var {clientSecret} = result.data;
 
       console.log("sec: "+clientSecret)

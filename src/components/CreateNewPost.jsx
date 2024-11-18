@@ -38,7 +38,7 @@ const CreateNewPost = () => {
     }
     console.log(data)
       try{
-        const td = await axios.post('/api/post/createPost', data)
+        const td = await axios.post('https://nnn-backend-4w8i.onrender.com/api/post/createPost', data)
         console.log(td.data._id)
         navigate(`/thread/${td.data._id}`)
         
