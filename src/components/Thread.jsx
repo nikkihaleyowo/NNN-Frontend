@@ -6,11 +6,21 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
+import {colorArr,priceArr} from '../utils'
 
 const Reply = (props) =>{
   const [large,setLarge] = useState(false)
 
   const [ref, inView] = useInView();
+
+  function formatText(text) {
+    console.log(text);
+    const regex = /@\{(.*?)\}/g;
+    const newText = text?.replace(regex, (match, p1) => {
+      return `<span class="text-yellow-500">${p1.slice(-10)}>></span>`;
+    });
+    return newText;
+  }
 
   return(
     
@@ -23,13 +33,20 @@ const Reply = (props) =>{
           className="your-element-class"
         >
           <div className="flex justify-between">
-          <h1 onClick={()=>{}} className="border-2 rounded-full pl-2 w-fit right-0 mr-5 px-2">{props.r.userId}</h1>
-        </div>
-      <div className="flow-root">
-        {props.r.hasImage && <img className={ !large ? 'bg-neutral-200 mt-4 size-[30%] float-left mr-2 ml-1' : 'bg-neutral-200 mt-4 size-[80%] m-auto '} onClick={()=>{setLarge(!large)}} src={props.r.image} alt=''/>}
+            <h1 onClick={()=>{}} className="border-2 rounded-full pl-2 w-fit right-0 mr-5 px-2">{props.r.userId}</h1>
+            {props.r._id && <h1 className="px-2 underline text-sm" onClick={()=>{navigator.clipboard.writeText(`@{${props.r._id}}`);}}>{props.r._id.slice(-10)}</h1>}
+          </div>
+          <div className="flow-root">
+            {props.r.hasImage && <img className={ !large ? 'bg-neutral-200 mt-4 size-[30%] float-left mr-2 ml-1' : 'bg-neutral-200 mt-4 size-[80%] m-auto '} onClick={()=>{setLarge(!large)}} src={props.r.image} alt=''/>}
         
-        <p className="p-2">{props.r.text}</p>
-      </div>
+            <p dangerouslySetInnerHTML={{ __html: formatText(props.r.text) }} />
+            {/*<p className="p-2">{formatText(props.r.text)}</p>*/}
+          </div>
+          <div className="px-2 pb-2 text-xs underline flex flex-wrap w-[100%]" >
+            {props.r.replies && props.r.replies.map(reply=>(
+              <h1 className="pr-2">{reply.replyId.slice(-10)}</h1>
+            ))}
+          </div>
       </motion.div>
     </div>
     
@@ -69,7 +86,7 @@ const Thread = (props) => {
     console.log(ndata)
     if(image.file!==""||reply!==""){
       try{
-        const rep = await axios.post('https://nnn-backend-4w8i.onrender.com/api/post/reply', ndata)
+        const rep = await axios.post('/api/post/reply', ndata)
         console.log(rep)
         const tReplies = [...data.replies];
         tReplies.push(ndata)
@@ -115,10 +132,15 @@ const Thread = (props) => {
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="your-element-class"
         >
-    <div className="w-[60%] border-2 border-t-8 mx-auto mb-6 rounded-b-2xl border-r-4">
+    <div className={"w-[60%] border-2 border-t-8 mx-auto mb-6 rounded-b-2xl border-r-4 bg-gradient-to-r " + (data.tier===-1 ? "" : colorArr[data.tier])}>
+      {console.log("tier: ", data.tier)}
       <div className="flex justify-between">
-        <h1 onClick={()=>{navigate(`/thread/${data._id}`);}} className="text-2xl pl-2 w-fit" >{data.title}</h1>
-        <h1 onClick={()=>{}} className="border-2 rounded-full text-lg pl-2 w-fit right-0 mr-5 px-2">{data.userId}</h1>
+        <div className="">
+          {console.log(props.data)}
+          <h1 className="px-2 underline">{props.data._id.slice(-10)}</h1>
+          <h1 onClick={()=>{navigate(`/thread/${data._id}`);}} className="text-2xl pl-2 w-fit" >{data.title}</h1>
+        </div>
+        <h1 onClick={()=>{}} className="border-2 rounded-full text-lg pl-2 w-fit right-0 mr-5 px-2 h-fit">{data.userId}</h1>
       </div>
       <div className="flow-root">
         {data.hasImage && <img className={ !large ? 'bg-neutral-200 mt-4 size-[50%] float-left mr-2 ml-1' : 'bg-neutral-200 mt-4 size-[99%] m-auto '} onClick={()=>{setLarge(!large)}} src={data.image} alt=''/>}

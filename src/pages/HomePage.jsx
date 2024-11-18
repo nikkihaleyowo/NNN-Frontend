@@ -44,7 +44,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://nnn-backend-4w8i.onrender.com/api/post/getPosts/${p}`);
+        const response = await axios.get(`/api/post/getPosts/${p}`);
         console.log("new data")
         console.log(response.data)
         setPosts(response.data);
